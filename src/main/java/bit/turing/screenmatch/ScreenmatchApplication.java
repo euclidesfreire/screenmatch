@@ -1,5 +1,8 @@
 package bit.turing.screenmatch;
 
+import bit.turing.screenmatch.model.SeriesModel;
+import bit.turing.screenmatch.services.ApiService;
+import bit.turing.screenmatch.services.ConvertData;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +16,13 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Hello World!");
+		ApiService apiService = new ApiService();
+
+		String json = apiService.fetchData("https://www.omdbapi.com/?t=supernatural&i=tt3896198&apikey=a08af02c");
+
+		ConvertData convert = new ConvertData();
+		SeriesModel data = convert.getData(json, SeriesModel.class);
+
+		System.out.println(data);
 	}
 }
