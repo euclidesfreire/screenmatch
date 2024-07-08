@@ -1,6 +1,7 @@
 package bit.turing.screenmatch;
 
-import bit.turing.screenmatch.model.SeriesModel;
+import bit.turing.screenmatch.model.movie.MovieModel;
+import bit.turing.screenmatch.model.series.SeriesModel;
 import bit.turing.screenmatch.services.ApiService;
 import bit.turing.screenmatch.services.ConvertData;
 import org.springframework.boot.CommandLineRunner;
@@ -17,12 +18,14 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		ApiService apiService = new ApiService();
-
-		String json = apiService.fetchData("https://www.omdbapi.com/?t=supernatural&i=tt3896198&apikey=a08af02c");
-
 		ConvertData convert = new ConvertData();
-		SeriesModel data = convert.getData(json, SeriesModel.class);
 
-		System.out.println(data);
+		String series = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=supernatural");
+		SeriesModel seriesData = convert.getData(series, SeriesModel.class);
+		System.out.println(seriesData);
+
+		String movie = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=matrix");
+		MovieModel movieData = convert.getData(movie, MovieModel.class);
+		System.out.println(movieData);
 	}
 }
