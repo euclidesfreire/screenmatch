@@ -20,12 +20,12 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		ApiService apiService = new ApiService();
 		ConvertData convert = new ConvertData();
 
-		String series = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=supernatural");
-		SeriesModel seriesData = convert.getData(series, SeriesModel.class);
-		System.out.println(seriesData);
-
 		String movie = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=matrix");
 		MovieModel movieData = convert.getData(movie, MovieModel.class);
 		System.out.println(movieData);
+		
+		String series = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=supernatural");
+		SeriesModel seriesData = convert.getData(series, SeriesModel.class);
+		System.out.println(seriesData);
 	}
 }
