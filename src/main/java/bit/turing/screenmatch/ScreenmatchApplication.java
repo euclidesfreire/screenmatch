@@ -27,5 +27,11 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		String series = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&t=supernatural");
 		SeriesModel seriesData = convert.getData(series, SeriesModel.class);
 		System.out.println(seriesData);
+
+		for(int season = 1; season < seriesData.totalSeasons(); season++){
+			String seasonData = apiService.fetchData("https://www.omdbapi.com/?apikey=a08af02c&season=" + season + "&t=supernatural");
+			//SeriesModel seasonConvert = convert.getData(series, SeModel.class);
+			System.out.println(seasonData);
+		}
 	}
 }
