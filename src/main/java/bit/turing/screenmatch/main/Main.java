@@ -6,14 +6,14 @@ import java.util.Scanner;
 import bit.turing.screenmatch.model.series.SeasonModel;
 import bit.turing.screenmatch.model.series.SeriesModel;
 import bit.turing.screenmatch.services.ApiService;
-import bit.turing.screenmatch.services.ConvertData;
+import bit.turing.screenmatch.services.ConvertDataService;
 
 public class Main {
     private final String API_URL = "https://www.omdbapi.com/?apikey=a08af02c&t=";
 
     private Scanner serie = new Scanner(System.in);
     private ApiService apiService = new ApiService();
-    private ConvertData convert = new ConvertData();
+    private ConvertDataService convert = new ConvertDataService();
 
     public void run() {
 

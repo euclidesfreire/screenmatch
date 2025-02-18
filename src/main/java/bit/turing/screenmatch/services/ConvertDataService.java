@@ -4,7 +4,7 @@ import bit.turing.screenmatch.interfaces.ConvertDataInterface;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ConvertData implements ConvertDataInterface {
+public class ConvertDataService implements ConvertDataInterface {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Override
