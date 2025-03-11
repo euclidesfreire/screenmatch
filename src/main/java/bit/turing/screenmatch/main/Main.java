@@ -38,7 +38,10 @@ public class Main {
 			seasons.add(seasonConvert);
 		}
 
-		seasons.forEach(System.out::println);
+		//seasons.forEach(System.out::println);
+
+        //Uso de Lambda
+        seasons.forEach(season -> season.episodes().forEach(episode -> episode.title()));
     }
 
 }
