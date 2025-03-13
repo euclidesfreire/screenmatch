@@ -1,8 +1,15 @@
 package bit.turing.screenmatch.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
+import bit.turing.screenmatch.model.series.EpisodeModel;
 import bit.turing.screenmatch.model.series.SeasonModel;
 import bit.turing.screenmatch.model.series.SeriesModel;
 import bit.turing.screenmatch.services.ApiService;
@@ -30,18 +37,47 @@ public class Main {
 
         ArrayList<SeasonModel> seasons = new ArrayList<SeasonModel>();
 
-		for(int season = 1; season <= serieConvert.totalSeasons(); season++){
-			String seasonData = apiService.fetchData(URL + "&season=" + season);
-			SeasonModel seasonConvert = convert.getData(seasonData, SeasonModel.class);
-			//System.out.println(seasonConvert);
+        for (int season = 1; season <= serieConvert.totalSeasons(); season++) {
+            String seasonData = apiService.fetchData(URL + "&season=" + season);
+            SeasonModel seasonConvert = convert.getData(seasonData, SeasonModel.class);
+            // System.out.println(seasonConvert);
 
-			seasons.add(seasonConvert);
-		}
+            seasons.add(seasonConvert);
+        }
 
-		//seasons.forEach(System.out::println);
+        // seasons.forEach(System.out::println);
 
-        //Uso de Lambda
-        seasons.forEach(season -> season.episodes().forEach(episode -> episode.title()));
+        // Uso de Lambda
+        // seasons.forEach(season -> season.episodes().forEach(episode ->
+        // System.out.println(episode.rating())));
+
+        /**
+         * O flatMap consegue entrar na lista de uma lista List<List>
+         */
+        List<EpisodeModel> episodes = seasons.stream()
+                .flatMap(season -> season.episodes().stream())
+                .collect(Collectors.toList());
+
+        List<EpisodeModel> topEpisodes = episodes.stream()
+                .filter(episode -> !episode.rating().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(EpisodeModel::rating).reversed())
+                .limit(5)
+                .collect(Collectors.toList());
+
+        //topEpisodes.forEach(System.out::println);
+
+         /**
+         * O flatMap consegue entrar na lista de uma lista List<List>
+         */
+        List<Map<EpisodeModel, Integer>> episodesMap = seasons.stream()
+                .flatMap(season -> season.episodes().stream()
+                    //map(episode -> episode)
+                    .map(episode -> Map.of(episode, season.number()))
+                )
+                .collect(Collectors.toList());
+
+        episodesMap.forEach(System.out::println);
+
     }
 
 }
